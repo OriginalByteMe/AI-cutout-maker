@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, useMantineColorScheme, ThemeIcon  } from '@mantine/core';
+import { Button, useMantineColorScheme, ThemeIcon } from '@mantine/core';
 import { useState } from 'react';
 import { FaSun, FaMoon, FaSync } from 'react-icons/fa';
 
@@ -33,7 +33,7 @@ export function ColorSchemeToggle() {
 
   return (
     <Button onClick={handleClick} variant="subtle">
-      <ThemeIcon color={colorScheme === 'light' ? 'black' : 'lilac'}  radius="xl">
+      <ThemeIcon color={colorScheme === 'light' ? 'black' : 'lilac'} radius="xl">
         {getIcon()}
       </ThemeIcon>
     </Button>

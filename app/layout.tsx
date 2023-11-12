@@ -3,7 +3,7 @@ import '@mantine/core/styles.css';
 import '../styles/global.css';
 import React from 'react';
 import { theme } from '../theme';
-import {Navbar} from '@/components/NavBar/NavBar';
+import { Navbar } from '@/components/NavBar/NavBar';
 
 export const metadata = {
   title: 'AI Cutout generator',
