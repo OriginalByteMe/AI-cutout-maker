@@ -1,28 +1,23 @@
-import { useState } from 'react';
-import AWS from 'aws-sdk';
+import S3  from 'aws-sdk/clients/s3';
 
-interface S3File {
-  key: string;
-  url: string;
-}
 
 export const useS3 = () => {
-  const [files, setFiles] = useState<S3File[]>([]);
-  const s3 = new AWS.S3({
-    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-    region: process.env.REACT_APP_AWS_REGION,
+  const s3 = new S3({
+    accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
+    region: process.env.NEXT_PUBLIC_AWS_REGION,
   });
 
   const getPresignedUrl = async (key: string, operation: 'putObject' | 'getObject'): Promise<string> => {
     const params = {
-      Bucket: process.env.REACT_APP_S3_BUCKET_NAME as string,
+      Bucket: process.env.NEXT_PUBLIC_AWS_STORAGE_BUCKET_NAME as string,
       Key: key,
       Expires: 60 * 5, // URL expires in 5 minutes
     };
+    console.log(params.Bucket)
     const url = await s3.getSignedUrlPromise(operation, params);
     return url;
   };
 
-  return { files, getPresignedUrl };
+  return { getPresignedUrl };
 };
