@@ -1,6 +1,5 @@
 import S3  from 'aws-sdk/clients/s3';
 
-
 export const useS3 = () => {
   const s3 = new S3({
     accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
