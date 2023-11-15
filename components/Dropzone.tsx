@@ -1,16 +1,16 @@
-import { useS3 } from '@/hooks/s3Upload';
 import { ExtFile, FileMosaic, Dropzone as FilesUIDropzone, Method } from "@files-ui/react";
-import { Notification } from '@mantine/core';
+import { Button, Notification } from '@mantine/core';
 import axios, { AxiosProgressEvent, AxiosRequestConfig } from 'axios';
-import cors from 'cors';
+import Link from "next/link";
 import { useState } from 'react';
 
 type UploadStatus = "preparing" | "aborted" | "uploading" | "success" | "error";
 
 export default function Dropzone() {
   const [files, setFiles] = useState<ExtFile[]>([]);
-  const [presignedUrl, setPresignedUrl] = useState<string>('');
+  const uploadUrl = process.env.NEXT_PUBLIC_UPLOAD_URL;
   const [dropOccurred, setDropOccurred] = useState<boolean>(false);
+  const [uploadSuccessful, setUploadSuccessful] = useState(false);
 
   const updateFiles = (acceptedFiles: ExtFile[]) => {
     setFiles(acceptedFiles.map((file) => ({
@@ -18,77 +18,63 @@ export default function Dropzone() {
       uploadStatus: "preparing" as UploadStatus,
     })));
     setDropOccurred(true);
-    useS3().getPresignedUrl(acceptedFiles[0].name as string,'putObject').then((url) => {
-      console.log(url);
-      setPresignedUrl(url);
-    });
   };
 
   const removeFile = (fileId: string | number | undefined) => {
     if (typeof fileId === "number") {
       setFiles(files.filter((x) => x.id !== fileId));
       setDropOccurred(false);
-      setPresignedUrl('');
     }
   };
 
   const uploadFile = async (file: ExtFile) => {
-    if (presignedUrl) {
-      const formData = new FormData();
-      formData.append('file', file.file as File);
-      const config: AxiosRequestConfig<FormData> = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        onUploadProgress: (progressEvent: AxiosProgressEvent) => {
-          const percentCompleted = Math.round((progressEvent.loaded * 100) / (progressEvent.total || 1));
-          setFiles(files.map((f) => {
-            if (f.id === file.id) {
-              return {
-                ...f,
-                uploadStatus: "uploading" as UploadStatus,
-                uploadProgress: percentCompleted,
-              };
-            }
-            return f;
-          }));
-        },
-      };
-      try {
-        const response = await axios.put(presignedUrl, formData, { headers: {
-          'Content-Type': file.type,
-        },});
+    const formData = new FormData();
+    formData.append('image', file.file as File);
+    const config: AxiosRequestConfig<FormData> = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      onUploadProgress: (progressEvent: AxiosProgressEvent) => {
+        const percentCompleted = Math.round((progressEvent.loaded * 100) / (progressEvent.total || 1));
         setFiles(files.map((f) => {
           if (f.id === file.id) {
             return {
               ...f,
-              uploadStatus: "success" as UploadStatus,
-              serverResponse: response.data,
+              uploadStatus: "uploading" as UploadStatus,
+              uploadProgress: percentCompleted,
             };
           }
           return f;
         }));
-      } catch (error) {
-        setFiles(files.map((f) => {
-          if (f.id === file.id) {
-            return {
-              ...f,
-              uploadStatus: "error" as UploadStatus,
-              errors: error.message,
-            };
-          }
-          return f;
-        }));
-      }
+      },
+    };
+    try {
+      const response = await axios.post(uploadUrl, formData, config);
+      setFiles(files.map((f) => {
+        if (f.id === file.id) {
+          setUploadSuccessful(true);
+          return {
+            ...f,
+            uploadStatus: "success" as UploadStatus,
+            serverResponse: response.data,
+          };
+        }
+        return f;
+      }));
+    } catch (error) {
+      setUploadSuccessful(false);
+      setFiles(files.map((f) => {
+        if (f.id === file.id) {
+          return {
+            ...f,
+            uploadStatus: "error" as UploadStatus,
+            errors: error.message,
+          };
+        }
+        return f;
+      }));
     }
   };
-
-  // Add the CORS middleware
-  const corsMiddleware = cors({
-    origin: process.env.NEXT_PUBLIC_APP_URL,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    credentials: true,
-  });
 
   return (
     <>
@@ -112,10 +98,20 @@ export default function Dropzone() {
       </FilesUIDropzone>
       {files.length > 0 && (
         <>
-          <button onClick={()=> uploadFile(files[0])}>Upload</button>
-          <Notification title="Upload successful" color="green">
-            Your image has been uploaded successfully. Click the button below to continue.
-          </Notification>
+          <div className="flex items-center justify-center">
+            {!uploadSuccessful ? (
+              <Button onClick={() => uploadFile(files[0])}>Upload</Button>
+            ) : (
+              <Link href="/cutouts">
+                <Button>Next</Button>
+              </Link>
+            )}
+          </div>
+          {uploadSuccessful && (
+            <Notification title="Upload successful" color="green">
+              Your image has been uploaded successfully. Click the button below to continue.
+            </Notification>
+          )}
         </>
       )}
     </>
