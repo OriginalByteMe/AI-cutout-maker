@@ -4,11 +4,11 @@ import { ColorSchemeToggle } from '../ColorSchemeToggle/ColorSchemeToggle';
 
 export function Navbar() {
   return (
-    <div className="flex items-center justify-between p-4">
+    <div className="flex flex-col items-center justify-between p-4 sm:flex-row sm:p-6 md:p-8">
       <a href="https://noahrijkaard.com">
         <Avatar src="./logo.svg" alt="Noah Rijkaard" radius="xl" size="lg" />
       </a>
-      <Group>
+      <Group className="mt-4 sm:mt-0">
         <a href="https://github.com/originalbyteme" target="_blank" rel="noopener noreferrer">
           <ThemeIcon color="black" radius="xl">
             <FaGithub />
