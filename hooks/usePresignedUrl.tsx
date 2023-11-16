@@ -12,7 +12,7 @@ const usePresignedUrl = (imageName: string | undefined, setError: (error: string
   const [file, setFile] = useState<ExtFile | null>(null);
 
   useEffect(() => {
-    if (!imageName) {
+    if (!imageName || imageName === 'test') {
       return;
     }
 

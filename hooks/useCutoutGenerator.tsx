@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+import { ExtFile } from "@files-ui/react";
 import axios from 'axios';
-import { ExtFile } from "@files-ui/react"
+import { useEffect, useState } from 'react';
 
 const useCutoutGenerator = (imageName: string | undefined, classList: string[], setError: (error: string) => void) => {
   const [files, setFiles] = useState<ExtFile[]>([]);
 
   useEffect(() => {
-    if (!imageName) {
+    if (!imageName || imageName === 'test') {
       return;
     }
 

@@ -1,24 +1,38 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router'
-import usePresignedUrl from '@/hooks/usePresignedUrl';
 import CutoutPreviews from '@/components/CutoutPreviews';
 import useCutoutGenerator from '@/hooks/useCutoutGenerator';
+import usePresignedUrl from '@/hooks/usePresignedUrl';
+import { ExtFile } from '@files-ui/react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import Layout from '@/app/layout';
 
 export default function CutoutPage() {
   const router = useRouter()
   const image_name = router.query.image_name as string | undefined;
   const [error, setError] = useState<string | null>(null);
+  const presignedUrl = usePresignedUrl(image_name, setError);
+  let Cutouts = useCutoutGenerator(image_name, ["human", "cup"], setError) as ExtFile[];
   
-  const OriginalImage = usePresignedUrl(image_name, setError);
-  const Cutouts = useCutoutGenerator(image_name, ["human", "cup"],setError);
+  let OriginalImage: ExtFile;
+  
+
+  if (image_name === "test") {
+    const placeholderImage = "/placeholder.png";
+    const numberOfCutouts = 5; // Set this to the desired number of cutouts
+
+    OriginalImage = { name: 'original', imageUrl: placeholderImage };
+    Cutouts = Array.from({length: numberOfCutouts}, (_, i) => ({name: `cutout${i}`, imageUrl: placeholderImage}));
+  } else {
+    OriginalImage = presignedUrl ? { name: image_name || '', imageUrl: presignedUrl } as ExtFile : { name: '', imageUrl: ''} as ExtFile;
+  }
 
   if (error) {
     return <div>Image not found</div>;
   }
 
   return (
-    <div>
-      {OriginalImage && Cutouts ? <CutoutPreviews singleFile={OriginalImage} multipleFiles={Cutouts} /> : <div>Loading...</div>}
-    </div>
+    <Layout>
+        {OriginalImage && Cutouts ? <CutoutPreviews singleFile={OriginalImage} multipleFiles={Cutouts} /> : <div>Loading...</div>}
+    </Layout>
   );
 }
