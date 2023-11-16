@@ -104,7 +104,7 @@ export default function Dropzone() {
                 {!uploadSuccessful ? (
                   <Button onClick={() => uploadFile(files[0])}>Upload</Button>
                 ) : (
-                  <Link href="/cutouts">
+                  <Link href={`/cutouts/${files[0].name}`}>
                     <Button>Next</Button>
                   </Link>
                 )}
