@@ -20,6 +20,8 @@ const FileMosaicComponent: React.FC<FileMosaicComponentProps> = ({ singleFile, m
     setImgSrc(imageSource);
   };
 
+  const hasImages = chunks.length > 0 && chunks.every(chunk => chunk.every(file => file.imageUrl));
+
   return (
     <>
       <div className="flex items-center justify-center space-x-4">
@@ -34,12 +36,12 @@ const FileMosaicComponent: React.FC<FileMosaicComponentProps> = ({ singleFile, m
         />
         <FaArrowRight className="text-xl" />
         <div>
-          {chunks.length > 0 ? (
+          {hasImages ? (
             <Carousel showArrows={true} className="px-2">
               {chunks.map((chunk, index) => (
                 <div key={index} className="grid grid-cols-2 grid-rows-2 gap-0.5">
-                  {chunk.map(file => (
-                    <div className="flex items-center justify-center">
+                  {chunk.map((file, fileIndex) => (
+                    <div key={fileIndex} className="flex items-center justify-center">
                       <FileMosaic
                         key={file.id}
                         {...file}
