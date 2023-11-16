@@ -1,17 +1,18 @@
+import Layout from '@/app/layout';
 import CutoutPreviews from '@/components/CutoutPreviews';
 import useCutoutGenerator from '@/hooks/useCutoutGenerator';
 import usePresignedUrl from '@/hooks/usePresignedUrl';
 import { ExtFile } from '@files-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import Layout from '@/app/layout';
 
 export default function CutoutPage() {
   const router = useRouter()
   const image_name = router.query.image_name as string | undefined;
+  const classes = router.query.class as string[] || [];
   const [error, setError] = useState<string | null>(null);
   const presignedUrl = usePresignedUrl(image_name, setError);
-  let Cutouts = useCutoutGenerator(image_name, ["human", "cup"], setError) as ExtFile[];
+  let Cutouts = useCutoutGenerator(image_name, classes, setError) as ExtFile[];
   
   let OriginalImage: ExtFile;
   

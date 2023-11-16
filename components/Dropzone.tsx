@@ -1,5 +1,5 @@
 import { ExtFile, FileMosaic, Dropzone as FilesUIDropzone, Method } from "@files-ui/react";
-import { Button, Notification } from '@mantine/core';
+import { Badge, Button, Notification, TextInput } from '@mantine/core';
 import axios, { AxiosProgressEvent, AxiosRequestConfig } from 'axios';
 import Link from "next/link";
 import { useState } from 'react';
@@ -11,6 +11,21 @@ export default function Dropzone() {
   const uploadUrl = process.env.NEXT_PUBLIC_S3_API + "/upload-image";
   const [dropOccurred, setDropOccurred] = useState<boolean>(false);
   const [uploadSuccessful, setUploadSuccessful] = useState(false);
+  
+  const [word, setWord] = useState('');
+  const [wordList, setWordList] = useState<string[]>([]);
+  
+  const colorSchemes = ['dark', 'light', 'blue', 'cyan', 'teal', 'green', 'lime', 'yellow', 'amber', 'orange', 'red', 'pink', 'purple', 'indigo', 'blue-gray'];
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      if (!/\s/.test(word)) { // Check if the word contains any spaces
+        setWordList([...wordList, word]);
+        setWord('');
+      }
+    }
+  }
 
   const updateFiles = (acceptedFiles: ExtFile[]) => {
     setFiles(acceptedFiles.map((file) => ({
@@ -76,10 +91,10 @@ export default function Dropzone() {
     }
   };
 
+
   return (
-    <>
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <div className="w-full max-w-lg">
+    
+        <div className="flex flex-col w-full max-w-lg gap-3 ">
           <FilesUIDropzone
             onChange={updateFiles}
             value={files}
@@ -100,11 +115,40 @@ export default function Dropzone() {
           </FilesUIDropzone>
           {files.length > 0 && (
             <>
+              {uploadSuccessful && (
+                <div className="flex flex-col gap-3">
+                  <TextInput
+                    variant="filled"
+                    value={word}
+                    onChange={(event) => setWord(event.currentTarget.value)}
+                    onKeyPress={handleKeyPress}
+                    size="md"
+                    radius="xl"
+                    label="Cutout objects"
+                    withAsterisk
+                    description="Names of objects you want to cut from this image (Yes people are objects in this case)"
+                    placeholder="Enter a word"
+                  />
+                  <div className="flex flex-wrap">
+                    {wordList.map((word, index) => (
+                      <Badge
+                      variant="light"
+                      size="xl"
+                      key={index}
+                      color={colorSchemes[Math.floor(Math.random() * colorSchemes.length)]}
+                      className="m-1"
+                    >
+                      {word}
+                    </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
               <div className="flex items-center justify-center mt-4">
                 {!uploadSuccessful ? (
                   <Button onClick={() => uploadFile(files[0])}>Upload</Button>
                 ) : (
-                  <Link href={`/cutouts/${files[0].name}`}>
+                  <Link href={`/cutout/${files[0].name}?${wordList.map(word => `class=${word}`).join('&')}`}>
                     <Button>Next</Button>
                   </Link>
                 )}
@@ -117,7 +161,6 @@ export default function Dropzone() {
             </>
           )}
         </div>
-      </div>
-    </>
+    
   );
 }
