@@ -83,7 +83,7 @@ export default function Dropzone() {
           return {
             ...f,
             uploadStatus: "error" as UploadStatus,
-            errors: error.message,
+            errors: (error as any).message,
           };
         }
         return f;
