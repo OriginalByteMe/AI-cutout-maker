@@ -4,6 +4,7 @@ import usePresignedUrl from '@/hooks/usePresignedUrl';
 import { ExtFile } from '@files-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { CssLoader } from '@/components/Loader';
 
 export default function CutoutPage() {
   const router = useRouter()
@@ -23,7 +24,7 @@ export default function CutoutPage() {
     OriginalImage = { name: 'original', imageUrl: placeholderImage };
     Cutouts = Array.from({length: numberOfCutouts}, (_, i) => ({name: `cutout${i}`, imageUrl: placeholderImage}));
   } else {
-    OriginalImage = presignedUrl ? { name: image_name || '', imageUrl: presignedUrl } as ExtFile : { name: '', imageUrl: ''} as ExtFile;
+    OriginalImage = presignedUrl ? presignedUrl : { name: '', imageUrl: ''} as ExtFile;
   }
 
   if (error) {
@@ -32,7 +33,8 @@ export default function CutoutPage() {
 
   return (
     <>
-        {OriginalImage && Cutouts ? <CutoutPreviews singleFile={OriginalImage} multipleFiles={Cutouts} /> : <div>Loading...</div>}
+        {OriginalImage && Cutouts ? <CutoutPreviews singleFile={OriginalImage} multipleFiles={Cutouts} /> : <CssLoader />}
+        
     </>
   );
 }
