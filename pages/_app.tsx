@@ -1,9 +1,11 @@
-import { AppProps } from 'next/app'
-import Head from 'next/head'
+import '@mantine/core/styles.css';
+import { AppProps } from 'next/app';
+import Head from 'next/head';
+import Layout from '@/layouts/layout';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <Layout>
       <Head>
         <title>AI Cutout generator</title>
         <meta name="description" content="A simple AI cutout generator" />
@@ -13,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           />
       </Head>
       <Component {...pageProps} />
-    </>
+    </Layout>
   )
 }
  
