@@ -1,6 +1,4 @@
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
-import '@mantine/core/styles.css';
-import '../styles/global.css';
 import React from 'react';
 import { theme } from '../theme';
 import { Navbar } from '@/components/NavBar/NavBar';
