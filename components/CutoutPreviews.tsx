@@ -58,7 +58,14 @@ const FileMosaicComponent: React.FC<FileMosaicComponentProps> = ({ singleFile, m
               ))}
             </Carousel>
           ) : (
-            <img src="/placeholder.png" alt="Placeholder" />
+            <FileMosaic
+              key="placeholder"
+              imageUrl="/placeholder.png"
+              info
+              preview
+              className="mb-5"
+              onSee={() => handleSee("/placeholder.png")}
+            />
           )}
         </div>
       </div>
