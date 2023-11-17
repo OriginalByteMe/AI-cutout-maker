@@ -1,4 +1,3 @@
-import Layout from '@/app/layout';
 import CutoutPreviews from '@/components/CutoutPreviews';
 import useCutoutGenerator from '@/hooks/useCutoutGenerator';
 import usePresignedUrl from '@/hooks/usePresignedUrl';
@@ -32,8 +31,8 @@ export default function CutoutPage() {
   }
 
   return (
-    <Layout>
+    <>
         {OriginalImage && Cutouts ? <CutoutPreviews singleFile={OriginalImage} multipleFiles={Cutouts} /> : <div>Loading...</div>}
-    </Layout>
+    </>
   );
 }
