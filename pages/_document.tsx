@@ -1,5 +1,6 @@
 import { ColorSchemeScript } from '@mantine/core';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
+
 class MyDocument extends Document {
   /**
    * Renders the HTML document with metadata for the AI Cutout generator site.

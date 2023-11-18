@@ -1,8 +1,8 @@
+import Layout from '@/layouts/layout';
 import '@mantine/core/styles.css';
 import { AppProps } from 'next/app';
-import '../styles/global.css';
 import Head from 'next/head';
-import Layout from '@/layouts/layout';
+import '../styles/global.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
