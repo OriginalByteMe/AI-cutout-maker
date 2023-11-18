@@ -1,21 +1,23 @@
+import ClassDisplay from '@/components/ClassDisplay';
 import CutoutPreviews from '@/components/CutoutPreviews';
+import { CssLoader } from '@/components/Loader';
 import useCutoutGenerator from '@/hooks/useCutoutGenerator';
 import usePresignedUrl from '@/hooks/usePresignedUrl';
 import { ExtFile } from '@files-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { CssLoader } from '@/components/Loader';
 
 export default function CutoutPage() {
   const router = useRouter()
   const image_name = router.query.image_name as string | undefined;
   const classes = router.query.class as string[] || [];
   const [error, setError] = useState<string | null>(null);
-  const presignedUrl = usePresignedUrl(image_name, setError);
-  let Cutouts = useCutoutGenerator(image_name, classes, setError) as ExtFile[];
+  const uploadedUrl = usePresignedUrl(image_name, setError);
+  let cutoutUrls = useCutoutGenerator(image_name, classes, setError) as ExtFile[];
+  console.log("🚀 ~ file: [image_name].tsx:16 ~ CutoutPage ~ Cutouts:", cutoutUrls)
   
   let OriginalImage: ExtFile;
-  
+  let Cutouts: ExtFile[];
 
   if (image_name === "test") {
     const placeholderImage = "/placeholder.png";
@@ -24,7 +26,8 @@ export default function CutoutPage() {
     OriginalImage = { name: 'original', imageUrl: placeholderImage };
     Cutouts = Array.from({length: numberOfCutouts}, (_, i) => ({name: `cutout${i}`, imageUrl: placeholderImage}));
   } else {
-    OriginalImage = presignedUrl ? presignedUrl : { name: '', imageUrl: ''} as ExtFile;
+    OriginalImage = uploadedUrl ? uploadedUrl : { name: '', imageUrl: ''} as ExtFile;
+    Cutouts = cutoutUrls ? cutoutUrls : [{}] as ExtFile[];
   }
 
   if (error) {
@@ -32,9 +35,9 @@ export default function CutoutPage() {
   }
 
   return (
-    <>
-        {OriginalImage && Cutouts ? <CutoutPreviews singleFile={OriginalImage} multipleFiles={Cutouts} /> : <CssLoader />}
-        
-    </>
+    <div className='flex items-center justify-center gap-2'>
+        {OriginalImage && Cutouts ? <CutoutPreviews singleFile={OriginalImage} multipleFiles={Cutouts} /> : <CssLoader />}  
+        {classes && <ClassDisplay classes={classes} />}
+    </div>
   );
 }
