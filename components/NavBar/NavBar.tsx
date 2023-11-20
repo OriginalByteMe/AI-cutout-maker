@@ -19,16 +19,12 @@ export function Navbar() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <ThemeIcon
-            radius="xl"
-          >
+          <ThemeIcon radius="xl">
             <FaLinkedin />
           </ThemeIcon>
         </a>
         <a href="mailto:noahrijkaard@gmail.com" target="_blank" rel="noopener noreferrer">
-          <ThemeIcon
-            radius="xl"
-          >
+          <ThemeIcon radius="xl">
             <FaEnvelope />
           </ThemeIcon>
         </a>

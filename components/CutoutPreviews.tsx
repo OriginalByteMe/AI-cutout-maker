@@ -1,8 +1,8 @@
-import { ExtFile, FileMosaic, FullScreen, ImagePreview } from "@files-ui/react";
+import { ExtFile, FileMosaic, FullScreen, ImagePreview } from '@files-ui/react';
 import React, { useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import { Carousel } from 'react-responsive-carousel';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 interface FileMosaicComponentProps {
   singleFile: ExtFile;
@@ -20,7 +20,8 @@ const FileMosaicComponent: React.FC<FileMosaicComponentProps> = ({ singleFile, m
     setImgSrc(imageSource);
   };
 
-  const hasImages = chunks.length > 0 && chunks.every(chunk => chunk.every(file => file.imageUrl));
+  const hasImages =
+    chunks.length > 0 && chunks.every((chunk) => chunk.every((file) => file.imageUrl));
 
   return (
     <>
@@ -64,15 +65,12 @@ const FileMosaicComponent: React.FC<FileMosaicComponentProps> = ({ singleFile, m
               info
               preview
               className="mb-5"
-              onSee={() => handleSee("/placeholder.png")}
+              onSee={() => handleSee('/placeholder.png')}
             />
           )}
         </div>
       </div>
-      <FullScreen
-        open={imgSrc !== undefined}
-        onClose={() => setImgSrc(undefined)}
-      >
+      <FullScreen open={imgSrc !== undefined} onClose={() => setImgSrc(undefined)}>
         <ImagePreview src={imgSrc} />
       </FullScreen>
     </>
