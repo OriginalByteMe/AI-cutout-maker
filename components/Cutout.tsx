@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
 import { Modal } from '@mantine/core';
-import { FaDownload } from 'react-icons/fa';
 import Image from 'next/image';
+import React, { useState } from 'react';
+import { FaDownload } from 'react-icons/fa';
 
 interface CutoutProps {
   imageLink: string;
