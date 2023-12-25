@@ -24,7 +24,6 @@ const FileMosaicComponent: React.FC<FileMosaicComponentProps> = ({ singleFile, m
   };
 
   const hasImages = chunks.length > 0 && chunks.every(chunk => chunk.every(file => file.imageUrl));
-  console.log("🚀 ~ file: CutoutPreviews.tsx:28 ~ hasImages:", hasImages)
 
   return (
     <>
