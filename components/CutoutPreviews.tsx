@@ -2,9 +2,7 @@ import { CssLoader } from '@/components/Loader';
 import { ExtFile, FileMosaic, FullScreen, ImagePreview } from "@files-ui/react";
 import React, { useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
-// import { Carousel } from 'react-responsive-carousel';
 import { Carousel } from '@mantine/carousel';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 interface FileMosaicComponentProps {
   singleFile: ExtFile;
@@ -51,12 +49,13 @@ const FileMosaicComponent: React.FC<FileMosaicComponentProps> = ({ singleFile, m
               height={200}
               slideSize={{ base: '100%', sm: '50%', md: '33.333333%' }}
               slideGap={{ base: 0, sm: 'md' }}
-            
-              align="start"
+              loop
+              align="center"
+              
             >
               {multipleFiles.map((file, fileIndex) => (
-                <Carousel.Slide key={fileIndex}>
-                  <div className="flex items-center justify-center">
+                <Carousel.Slide key={fileIndex} className="flex flex-col items-center justify-center ">
+                  
                     <FileMosaic
                       key={file.id}
                       {...file}
@@ -67,7 +66,7 @@ const FileMosaicComponent: React.FC<FileMosaicComponentProps> = ({ singleFile, m
                       className="mb-5"
                       onSee={() => handleSee(file.imageUrl)}
                     />
-                  </div>
+                  
                 </Carousel.Slide>
               ))}
             </Carousel>
