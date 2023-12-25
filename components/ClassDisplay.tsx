@@ -10,7 +10,7 @@ const ClassDisplay: React.FC<ClassDisplayProps> = ({ classes }) => {
   const classArray = Array.isArray(classes) ? classes : [classes];
 
   return (
-    <div className='flex flex-col items-center justify-center gap-3'>
+    <div className='flex flex-col items-center justify-center gap-3 pb-10'>
       <Title size="h2">The classes the AI used!</Title>
       <Paper className="p-4 border shadow h-max w-max">
         <Grid gutter="md" justify="center" align="center" grow>
