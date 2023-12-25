@@ -2,7 +2,8 @@ import { CssLoader } from '@/components/Loader';
 import { ExtFile, FileMosaic, FullScreen, ImagePreview } from "@files-ui/react";
 import React, { useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
-import { Carousel } from 'react-responsive-carousel';
+// import { Carousel } from 'react-responsive-carousel';
+import { Carousel } from '@mantine/carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 interface FileMosaicComponentProps {
@@ -44,27 +45,32 @@ const FileMosaicComponent: React.FC<FileMosaicComponentProps> = ({ singleFile, m
         <FaArrowRight className="text-xl" />
         <>
         {multipleFiles && multipleFiles.length > 0 ? (
-            hasImages ? (
-              <Carousel showArrows={true} className="px-2">
-                {chunks.map((chunk, index) => (
-                  <div key={index} className="grid grid-cols-2 grid-rows-2 gap-0.5">
-                    {chunk.map((file, fileIndex) => (
-                      <div key={fileIndex} className="flex items-center justify-center">
-                        <FileMosaic
-                          key={file.id}
-                          {...file}
-                          info
-                          preview
-                          uploadStatus={file.uploadStatus}
-                          downloadUrl={file.imageUrl}
-                          className="mb-5"
-                          onSee={() => handleSee(file.imageUrl)}
-                        />
-                      </div>
-                    ))}
+          hasImages ? (
+            <Carousel
+              withIndicators
+              height={200}
+              slideSize={{ base: '100%', sm: '50%', md: '33.333333%' }}
+              slideGap={{ base: 0, sm: 'md' }}
+            
+              align="start"
+            >
+              {multipleFiles.map((file, fileIndex) => (
+                <Carousel.Slide key={fileIndex}>
+                  <div className="flex items-center justify-center">
+                    <FileMosaic
+                      key={file.id}
+                      {...file}
+                      info
+                      preview
+                      uploadStatus={file.uploadStatus}
+                      downloadUrl={file.imageUrl}
+                      className="mb-5"
+                      onSee={() => handleSee(file.imageUrl)}
+                    />
                   </div>
-                ))}
-              </Carousel>
+                </Carousel.Slide>
+              ))}
+            </Carousel>
             ) : (
               <FileMosaic
                 key="placeholder"
