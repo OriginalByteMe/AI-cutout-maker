@@ -17,17 +17,18 @@
   },
   "dependencies": {
     "@files-ui/react": "^1.0.8",
+    "@mantine/carousel": "^7.3.2",
     "@mantine/core": "7.2.1",
     "@mantine/hooks": "7.2.1",
     "@next/bundle-analyzer": "^14.0.1",
     "@tabler/icons-react": "^2.40.0",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.2",
+    "embla-carousel-react": "^7.1.0",
     "next": "14.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.11.0",
-    "react-responsive-carousel": "^3.2.23",
     "tailwindcss": "^3.3.5"
   },
   "devDependencies": {

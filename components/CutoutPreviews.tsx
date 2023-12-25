@@ -2,8 +2,8 @@ import { CssLoader } from '@/components/Loader';
 import { ExtFile, FileMosaic, FullScreen, ImagePreview } from "@files-ui/react";
 import React, { useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
-import { Carousel } from 'react-responsive-carousel';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from '@mantine/carousel';
+import { useMediaQuery } from '@mantine/hooks';
 
 interface FileMosaicComponentProps {
   singleFile: ExtFile;
@@ -18,6 +18,8 @@ const FileMosaicComponent: React.FC<FileMosaicComponentProps> = ({ singleFile, m
     }
   }
 
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
   const [imgSrc, setImgSrc] = useState<string | undefined>(undefined);
   const handleSee = (imageSource: string | undefined) => {
     setImgSrc(imageSource);
@@ -26,67 +28,62 @@ const FileMosaicComponent: React.FC<FileMosaicComponentProps> = ({ singleFile, m
   const hasImages = chunks.length > 0 && chunks.every(chunk => chunk.every(file => file.imageUrl));
 
   return (
-    <>
-      <div className="flex items-center justify-center space-x-4">
-        {singleFile ? (
+    <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} items-center justify-center space-x-4`}>
+      {singleFile ? (
+        <div className={`${isMobile ? 'mb-5' : 'mr-5'}`}>
           <FileMosaic
             key={singleFile.id}
             {...singleFile}
             info
             preview
             uploadStatus={singleFile.uploadStatus}
-            className="mr-5"
             onSee={() => handleSee(singleFile.imageUrl)}
           />
+        </div>
+      ) : (
+        <CssLoader />
+      )}
+      {isMobile ? null : <FaArrowRight className="text-xl" />}
+      {multipleFiles && multipleFiles.length > 0 ? (
+        hasImages ? (
+          <Carousel
+            withIndicators
+            height={200}
+            slideSize={{ base: '100%', sm: '50%', md: '33.333333%' }}
+            slideGap={{ base: 0, sm: 'md' }}
+            loop
+            align="center"
+            orientation={isMobile ? 'vertical' : 'horizontal'}
+          >
+            {multipleFiles.map((file, fileIndex) => (
+              <Carousel.Slide key={fileIndex} className="flex flex-col items-center justify-center ">
+                <FileMosaic
+                  key={file.id}
+                  {...file}
+                  info
+                  preview
+                  uploadStatus={file.uploadStatus}
+                  downloadUrl={file.imageUrl}
+                  className="mb-5"
+                  onSee={() => handleSee(file.imageUrl)}
+                />
+              </Carousel.Slide>
+            ))}
+          </Carousel>
         ) : (
-          <CssLoader />
-        )}
-        <FaArrowRight className="text-xl" />
-        <>
-        {multipleFiles && multipleFiles.length > 0 ? (
-            hasImages ? (
-              <Carousel showArrows={true} className="px-2">
-                {chunks.map((chunk, index) => (
-                  <div key={index} className="grid grid-cols-2 grid-rows-2 gap-0.5">
-                    {chunk.map((file, fileIndex) => (
-                      <div key={fileIndex} className="flex items-center justify-center">
-                        <FileMosaic
-                          key={file.id}
-                          {...file}
-                          info
-                          preview
-                          uploadStatus={file.uploadStatus}
-                          downloadUrl={file.imageUrl}
-                          className="mb-5"
-                          onSee={() => handleSee(file.imageUrl)}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </Carousel>
-            ) : (
-              <FileMosaic
-                key="placeholder"
-                imageUrl="/placeholder.png"
-                info
-                preview
-                className="mb-5"
-                onSee={() => handleSee("/placeholder.png")}
-              />
-            )
-          ) : (
-            <CssLoader />
-          )}
-        </>
-      </div>
-      <FullScreen
-        open={imgSrc !== undefined}
-        onClose={() => setImgSrc(undefined)}
-      >
-        <ImagePreview src={imgSrc} />
-      </FullScreen>
-    </>
+          <FileMosaic
+            key="placeholder"
+            imageUrl="/placeholder.png"
+            info
+            preview
+            className="mb-5"
+            onSee={() => handleSee("/placeholder.png")}
+          />
+        )
+      ) : (
+        <CssLoader />
+      )}
+    </div>
   );
 };
 
