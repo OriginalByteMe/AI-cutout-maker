@@ -35,9 +35,9 @@ export default function CutoutPage() {
   }
 
   return (
-    <div className='flex items-center justify-center gap-2'>
-        {OriginalImage && Cutouts ? <CutoutPreviews singleFile={OriginalImage} multipleFiles={Cutouts} /> : <CssLoader />}  
+    <div className='flex flex-col items-center justify-center gap-2'>
         {classes && <ClassDisplay classes={classes} />}
+        {OriginalImage && Cutouts && <CutoutPreviews singleFile={OriginalImage} multipleFiles={Cutouts} />}
     </div>
   );
 }
