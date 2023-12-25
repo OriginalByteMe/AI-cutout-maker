@@ -30,7 +30,7 @@ export default function Dropzone() {
   const updateFiles = (acceptedFiles: ExtFile[]) => {
     setFiles(acceptedFiles.map((file) => ({
       ...file,
-      uploadStatus: "preparing" as UploadStatus,
+      uploadStatus: undefined as UploadStatus | undefined,
     })));
     setDropOccurred(true);
   };
@@ -93,7 +93,6 @@ export default function Dropzone() {
 
 
   return (
-    
         <div className="flex flex-col w-full max-w-lg gap-3 ">
           <FilesUIDropzone
             onChange={updateFiles}
