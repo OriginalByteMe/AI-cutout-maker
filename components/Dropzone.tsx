@@ -30,7 +30,7 @@ export default function Dropzone() {
   const updateFiles = (acceptedFiles: ExtFile[]) => {
     setFiles(acceptedFiles.map((file) => ({
       ...file,
-      uploadStatus: "preparing" as UploadStatus,
+      uploadStatus: undefined as UploadStatus | undefined,
     })));
     setDropOccurred(true);
   };
@@ -93,7 +93,6 @@ export default function Dropzone() {
 
 
   return (
-    
         <div className="flex flex-col w-full max-w-lg gap-3 ">
           <FilesUIDropzone
             onChange={updateFiles}
@@ -144,12 +143,13 @@ export default function Dropzone() {
                   </div>
                 </div>
               )}
+              
               <div className="flex items-center justify-center mt-4">
                 {!uploadSuccessful ? (
                   <Button onClick={() => uploadFile(files[0])}>Upload</Button>
                 ) : (
                   <Link href={`/cutout/${files[0].name}?${wordList.map(word => `class=${word}`).join('&')}`}>
-                    <Button>Next</Button>
+                    <Button disabled={wordList.length === 0}>Next</Button>
                   </Link>
                 )}
               </div>
@@ -161,6 +161,5 @@ export default function Dropzone() {
             </>
           )}
         </div>
-    
   );
 }
