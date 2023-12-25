@@ -144,12 +144,13 @@ export default function Dropzone() {
                   </div>
                 </div>
               )}
+              
               <div className="flex items-center justify-center mt-4">
                 {!uploadSuccessful ? (
                   <Button onClick={() => uploadFile(files[0])}>Upload</Button>
                 ) : (
                   <Link href={`/cutout/${files[0].name}?${wordList.map(word => `class=${word}`).join('&')}`}>
-                    <Button>Next</Button>
+                    <Button disabled={wordList.length === 0}>Next</Button>
                   </Link>
                 )}
               </div>
@@ -161,6 +162,5 @@ export default function Dropzone() {
             </>
           )}
         </div>
-    
   );
 }
