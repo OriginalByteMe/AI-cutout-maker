@@ -1,4 +1,4 @@
-import { ExtFile } from "@files-ui/react";
+import { ExtFile } from '@files-ui/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -18,8 +18,10 @@ const usePresignedUrl = (imageName: string | undefined, setError: (error: string
 
     const fetchPresignedUrl = async () => {
       try {
-        const response = await axios.get(process.env.NEXT_PUBLIC_S3_API + `/get-image/${imageName}`);
-        console.log(response)
+        const response = await axios.get(
+          process.env.NEXT_PUBLIC_S3_API + `/get-image/${imageName}`
+        );
+        console.log(response);
         setFile({
           id: response.data.id,
           size: response.data[1].size,

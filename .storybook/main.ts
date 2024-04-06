@@ -30,8 +30,8 @@ const config: StorybookConfig = {
   core: {},
 
   docs: {
-    autodocs: true
-  }
+    autodocs: true,
+  },
 };
 
 export default config;

@@ -31,12 +31,27 @@ const Cutout: React.FC<CutoutProps> = ({ imageLink, height = 100, width = 100 })
 
   return (
     <div className="relative cursor-pointer group">
-      <Image src={imageLink} alt="Cutout" onClick={handleImageClick} height={height} width={width} objectFit="cover" loading="lazy" />
+      <Image
+        src={imageLink}
+        alt="Cutout"
+        onClick={handleImageClick}
+        height={height}
+        width={width}
+        objectFit="cover"
+        loading="lazy"
+      />
       <div className="absolute bottom-0 transform -translate-x-1/2 opacity-0 left-1/2 group-hover:opacity-100">
         <FaDownload onClick={handleDownload} className="text-xl" />
       </div>
       <Modal opened={isOpen} onClose={handleClose} size="xl">
-        <Image src={imageLink} alt="Cutout" height={height} width={width} objectFit="cover" loading="lazy" />
+        <Image
+          src={imageLink}
+          alt="Cutout"
+          height={height}
+          width={width}
+          objectFit="cover"
+          loading="lazy"
+        />
       </Modal>
     </div>
   );
