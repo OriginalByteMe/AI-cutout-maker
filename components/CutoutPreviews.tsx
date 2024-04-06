@@ -1,9 +1,10 @@
 import { CssLoader } from '@/components/Loader';
-import { ExtFile, FileMosaic, FullScreen, ImagePreview } from "@files-ui/react";
-import React, { useState } from 'react';
-import { FaArrowRight } from 'react-icons/fa';
+import { ExtFile, FileMosaic, FullScreen, ImagePreview } from '@files-ui/react';
 import { Carousel } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
+import React, { useState } from 'react';
+import { FaArrowRight } from 'react-icons/fa';
+import ImageGrid from './cutout-grid';
 
 interface FileMosaicComponentProps {
   singleFile: ExtFile;
@@ -25,10 +26,13 @@ const FileMosaicComponent: React.FC<FileMosaicComponentProps> = ({ singleFile, m
     setImgSrc(imageSource);
   };
 
-  const hasImages = chunks.length > 0 && chunks.every(chunk => chunk.every(file => file.imageUrl));
+  const hasImages =
+    chunks.length > 0 && chunks.every((chunk) => chunk.every((file) => file.imageUrl));
 
   return (
-    <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} items-center justify-center space-x-4`}>
+    <div
+      className={`flex ${isMobile ? 'flex-col' : 'flex-row'} items-center justify-center space-x-4`}
+    >
       {singleFile ? (
         <div className={`${isMobile ? 'mb-5' : 'mr-5'}`}>
           <FileMosaic
@@ -37,7 +41,7 @@ const FileMosaicComponent: React.FC<FileMosaicComponentProps> = ({ singleFile, m
             info
             preview
             uploadStatus={singleFile.uploadStatus}
-            onSee={() => handleSee(singleFile.imageUrl)}
+            // onSee={() => handleSee(singleFile.imageUrl)}
           />
         </div>
       ) : (
@@ -46,38 +50,18 @@ const FileMosaicComponent: React.FC<FileMosaicComponentProps> = ({ singleFile, m
       {isMobile ? null : <FaArrowRight className="text-xl" />}
       {multipleFiles && multipleFiles.length > 0 ? (
         hasImages ? (
-          <Carousel
-            withIndicators
-            height={200}
-            slideSize={{ base: '100%', sm: '50%', md: '33.333333%' }}
-            slideGap={{ base: 0, sm: 'md' }}
-            loop
-            align="center"
-            orientation={isMobile ? 'vertical' : 'horizontal'}
-          >
-            {multipleFiles.map((file, fileIndex) => (
-              <Carousel.Slide key={fileIndex} className="flex flex-col items-center justify-center ">
-                <FileMosaic
-                  key={file.id}
-                  {...file}
-                  info
-                  preview
-                  uploadStatus={file.uploadStatus}
-                  downloadUrl={file.imageUrl}
-                  className="mb-5"
-                  onSee={() => handleSee(file.imageUrl)}
-                />
-              </Carousel.Slide>
-            ))}
-          </Carousel>
+          // <div className="w-full h-screen py-20">
+          // <LayoutGrid cards={cards} />
+          <ImageGrid files={multipleFiles} />
         ) : (
+          // </div> // Use LayoutGrid instead of Carousel
           <FileMosaic
             key="placeholder"
             imageUrl="/placeholder.png"
             info
             preview
             className="mb-5"
-            onSee={() => handleSee("/placeholder.png")}
+            onSee={() => handleSee('/placeholder.png')}
           />
         )
       ) : (

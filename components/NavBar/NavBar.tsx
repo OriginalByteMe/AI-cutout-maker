@@ -5,7 +5,7 @@ import { ColorSchemeToggle } from '../ColorSchemeToggle/ColorSchemeToggle';
 export function Navbar() {
   return (
     <div className="fixed top-0 z-50 flex flex-col items-center justify-between w-full p-4 sm:flex-row sm:p-6 md:p-8">
-      <a href="https://noahrijkaard.com">
+      <a href="https://cutouts.noahrijkaard.com">
         <Avatar src="/logo.svg" alt="Noah Rijkaard" radius="xl" size="lg" />
       </a>
       <Group className="mt-4 sm:mt-0">
@@ -19,18 +19,17 @@ export function Navbar() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <ThemeIcon
-            radius="xl"
-          >
+          <ThemeIcon radius="xl">
             <FaLinkedin />
           </ThemeIcon>
         </a>
         <a href="mailto:noahrijkaard@gmail.com" target="_blank" rel="noopener noreferrer">
-          <ThemeIcon
-            radius="xl"
-          >
+          <ThemeIcon radius="xl">
             <FaEnvelope />
           </ThemeIcon>
+        </a>
+        <a href="https://noahrijkaard.com">
+          <Avatar src="/profile.jpg" alt="Noah Rijkaard" radius="xl" size="md" />
         </a>
         <ColorSchemeToggle />
       </Group>
