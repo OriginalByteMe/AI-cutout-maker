@@ -7,8 +7,8 @@ import { useState } from 'react';
 export default function UploadPage() {
   useWarmup();
   return (
-      <>
-        <Dropzone />
-      </>
+    <>
+      <Dropzone />
+    </>
   );
 }

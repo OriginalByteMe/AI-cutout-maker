@@ -1,8 +1,12 @@
-import { ExtFile } from "@files-ui/react";
+import { ExtFile } from '@files-ui/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const useCutoutGenerator = (imageName: string | undefined, classList: string[], setError: (error: string) => void) => {
+const useCutoutGenerator = (
+  imageName: string | undefined,
+  classList: string[],
+  setError: (error: string) => void
+) => {
   const [files, setFiles] = useState<ExtFile[]>([]);
 
   useEffect(() => {
@@ -12,7 +16,10 @@ const useCutoutGenerator = (imageName: string | undefined, classList: string[], 
 
     const fetchCutouts = async () => {
       try {
-        const response = await axios.post(process.env.NEXT_PUBLIC_CUTOUT_API + `/create-cutouts/${imageName}`, { classes: classList });
+        const response = await axios.post(
+          process.env.NEXT_PUBLIC_CUTOUT_API + `/create-cutouts/${imageName}`,
+          { classes: classList }
+        );
         const files = response.data.map((file: any, index: number) => ({
           id: `file-${index}`,
           size: file[1].size || 0,

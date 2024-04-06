@@ -8,26 +8,31 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 export default function CutoutPage() {
-  const router = useRouter()
+  const router = useRouter();
   const image_name = router.query.image_name as string | undefined;
-  const classes = router.query.class as string[] || [];
+  const classes = (router.query.class as string[]) || [];
   const [error, setError] = useState<string | null>(null);
   const uploadedUrl = usePresignedUrl(image_name, setError);
   let cutoutUrls = useCutoutGenerator(image_name, classes, setError) as ExtFile[];
-  console.log("🚀 ~ file: [image_name].tsx:16 ~ CutoutPage ~ Cutouts:", cutoutUrls)
-  
+  console.log('🚀 ~ file: [image_name].tsx:16 ~ CutoutPage ~ Cutouts:', cutoutUrls);
+
   let OriginalImage: ExtFile;
   let Cutouts: ExtFile[];
 
-  if (image_name === "test") {
-    const placeholderImage = "/placeholder.png";
+  if (image_name === 'test') {
+    const placeholderImage = '/placeholder.png';
     const numberOfCutouts = 5; // Set this to the desired number of cutouts
 
     OriginalImage = { name: 'original', imageUrl: placeholderImage };
-    Cutouts = Array.from({length: numberOfCutouts}, (_, i) => ({name: `cutout${i}`, imageUrl: placeholderImage}));
+    Cutouts = Array.from({ length: numberOfCutouts }, (_, i) => ({
+      id: i,
+      name: `cutout${i}`,
+      imageUrl: placeholderImage,
+    }));
+    console.log('🚀 ~ file: [image_name].tsx:33 ~ CutoutPage ~ Cutouts', Cutouts);
   } else {
-    OriginalImage = uploadedUrl ? uploadedUrl : { name: '', imageUrl: ''} as ExtFile;
-    Cutouts = cutoutUrls ? cutoutUrls : [{}] as ExtFile[];
+    OriginalImage = uploadedUrl ? uploadedUrl : ({ name: '', imageUrl: '' } as ExtFile);
+    Cutouts = cutoutUrls ? cutoutUrls : ([{}] as ExtFile[]);
   }
 
   if (error) {
@@ -35,9 +40,11 @@ export default function CutoutPage() {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center gap-2'>
-        {classes && <ClassDisplay classes={classes} />}
-        {OriginalImage && Cutouts && <CutoutPreviews singleFile={OriginalImage} multipleFiles={Cutouts} />}
+    <div className="flex flex-col items-center justify-center gap-2">
+      {classes && <ClassDisplay classes={classes} />}
+      {OriginalImage && Cutouts && (
+        <CutoutPreviews singleFile={OriginalImage} multipleFiles={Cutouts} />
+      )}
     </div>
   );
 }
