@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@files-ui/react": "^1.0.8",
+    "@google/genai": "^1.32.0",
     "@mantine/carousel": "7.17.8",
     "@mantine/core": "7.17.8",
     "@mantine/hooks": "7.17.8",
