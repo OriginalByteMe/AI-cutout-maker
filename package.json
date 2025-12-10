@@ -8,7 +8,7 @@
     "analyze": "ANALYZE=true next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "lint": "next lint",
+    "lint": "eslint .",
     "jest": "jest",
     "jest:watch": "jest --watch",
     "prettier:check": "prettier --check \"**/*.{ts,tsx}\"",
@@ -20,16 +20,16 @@
     "@mantine/carousel": "7.17.8",
     "@mantine/core": "7.17.8",
     "@mantine/hooks": "7.17.8",
-    "@next/bundle-analyzer": "^14.0.1",
+    "@next/bundle-analyzer": "16.0.8",
     "@tabler/icons-react": "^2.40.0",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.2",
     "clsx": "^2.1.0",
     "embla-carousel-react": "^7.1.0",
     "framer-motion": "^11.0.25",
-    "next": "14.0.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "next": "16.0.8",
+    "react": "19.2.1",
+    "react-dom": "19.2.1",
     "react-element-to-jsx-string": "^15.0.0",
     "react-icons": "^4.11.0",
     "tailwind-merge": "^2.2.2",
@@ -37,14 +37,14 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
-    "@next/eslint-plugin-next": "^14.0.1",
+    "@next/eslint-plugin-next": "16.0.8",
     "@testing-library/dom": "^9.3.3",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.5.1",
     "@types/jest": "^29.5.7",
     "@types/node": "^20.8.10",
-    "@types/react": "18.2.34",
+    "@types/react": "19.2.7",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
     "babel-loader": "^9.1.3",
@@ -68,5 +68,8 @@
     "typescript": "5.2.2",
     "webpack": "^5.89.0"
   },
-  "packageManager": "yarn@4.0.1"
+  "packageManager": "yarn@4.0.1",
+  "resolutions": {
+    "@types/react": "19.2.7"
+  }
 }
