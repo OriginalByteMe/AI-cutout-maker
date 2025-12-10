@@ -1,17 +1,23 @@
 'use client';
 
 import {
-  ActionIcon,
-  Tooltip,
-  type ColorScheme,
-  useComputedColorScheme,
-  useMantineColorScheme,
+    ActionIcon,
+    Tooltip,
+    useComputedColorScheme,
+    useMantineColorScheme,
+    type ColorScheme,
 } from '@mantine/core';
 import { Laptop2, MoonStar, SunMedium } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 export function ColorSchemeToggle() {
   const { colorScheme, setColorScheme } = useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const labels: Record<ColorScheme, string> = {
     auto: 'System',
@@ -25,22 +31,31 @@ export function ColorSchemeToggle() {
     setColorScheme(next);
   };
 
-  const icon =
-    colorScheme === 'auto'
-      ? Laptop2
-      : computedColorScheme === 'dark'
-      ? MoonStar
-      : SunMedium;
+  const displayScheme: ColorScheme = mounted ? colorScheme : 'auto';
+
+  const effectiveScheme =
+    displayScheme === 'auto' ? (computedColorScheme ?? 'light') : (displayScheme as ColorScheme);
+
+  const renderScheme = mounted ? effectiveScheme : 'auto';
+
+  const labelScheme =
+    !mounted && colorScheme === 'auto'
+      ? 'auto'
+      : colorScheme === 'auto'
+        ? effectiveScheme
+        : colorScheme;
+
+  const icon = renderScheme === 'auto' ? Laptop2 : renderScheme === 'dark' ? MoonStar : SunMedium;
 
   const IconComponent = icon;
 
   return (
-    <Tooltip withArrow label={`Theme: ${labels[colorScheme]}`}>
+    <Tooltip withArrow label={`Theme: ${labels[labelScheme]}`}>
       <ActionIcon
         variant="default"
         radius="xl"
         size="lg"
-        aria-label={`Toggle color scheme (current: ${labels[colorScheme]})`}
+        aria-label={`Toggle color scheme (current: ${labels[labelScheme]})`}
         onClick={handleClick}
       >
         <IconComponent size={18} strokeWidth={1.8} />

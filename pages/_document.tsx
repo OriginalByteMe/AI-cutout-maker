@@ -1,5 +1,7 @@
-import { ColorSchemeScript } from '@mantine/core';
+import { ColorSchemeScript, localStorageColorSchemeManager } from '@mantine/core';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
+
+const colorSchemeManager = localStorageColorSchemeManager({ key: 'ai-cutout-color-scheme' });
 
 class MyDocument extends Document {
   /**
@@ -10,7 +12,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <ColorSchemeScript />
+          <ColorSchemeScript defaultColorScheme="auto" colorSchemeManager={colorSchemeManager} />
           <link rel="shortcut icon" href="/logo.svg" />
         </Head>
         <body>

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
 import { ActionIcon, Modal } from '@mantine/core';
 import { Download } from 'lucide-react';
 import Image from 'next/image';
+import React, { useState } from 'react';
 
 interface CutoutProps {
   imageLink: string;

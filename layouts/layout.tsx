@@ -1,7 +1,7 @@
+import { Navbar } from '@/components/NavBar/NavBar';
 import { AppShell, MantineProvider, localStorageColorSchemeManager } from '@mantine/core';
 import React from 'react';
 import { theme } from '../theme';
-import { Navbar } from '@/components/NavBar/NavBar';
 
 export default function RootLayout({ children }: { children: any }) {
   return (

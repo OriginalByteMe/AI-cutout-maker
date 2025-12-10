@@ -2,8 +2,8 @@ import { CssLoader } from '@/components/Loader';
 import { ExtFile, FileMosaic, FullScreen, ImagePreview } from '@files-ui/react';
 import { Carousel } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
-import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
 import ImageGrid from './cutout-grid';
 
 interface FileMosaicComponentProps {
