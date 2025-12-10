@@ -1,22 +1,24 @@
 'use client';
-import { Anchor, Button, Text, Title, useMantineColorScheme } from '@mantine/core';
+import { Anchor, Button, Text, Title, useComputedColorScheme } from '@mantine/core';
+import clsx from 'clsx';
 import Link from 'next/link';
 export function Welcome() {
-  const { colorScheme } = useMantineColorScheme();
+  const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
 
   return (
     <>
       <Title
-        className={`text-${
-          colorScheme === 'dark' ? 'white' : 'black'
-        } text-6xl font-bold tracking-tight text-center mt-20`}
+        className={clsx(
+          'mt-20 text-center text-6xl font-bold tracking-tight',
+          computedColorScheme === 'dark' ? 'text-white' : 'text-black'
+        )}
       >
         Welcome to{' '}
         <Text inherit variant="gradient" component="span" gradient={{ from: 'blue', to: 'green' }}>
           Noah's AI Cutout Generator
         </Text>
       </Title>
-      <Text className="text-gray-400 text-center text-lg max-w-xl mx-auto mt-8">
+      <Text className="mx-auto mt-8 max-w-xl text-center text-lg text-gray-700 dark:text-gray-300">
         The app that lets you {''}
         <Text inherit variant="gradient" component="span" gradient={{ from: 'blue', to: 'green' }}>
           cutout any subject from an image

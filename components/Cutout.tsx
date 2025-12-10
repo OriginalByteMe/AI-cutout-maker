@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Modal } from '@mantine/core';
-import { FaDownload } from 'react-icons/fa';
+import { ActionIcon, Modal } from '@mantine/core';
+import { Download } from 'lucide-react';
 import Image from 'next/image';
+import React, { useState } from 'react';
 
 interface CutoutProps {
   imageLink: string;
@@ -40,9 +40,17 @@ const Cutout: React.FC<CutoutProps> = ({ imageLink, height = 100, width = 100 })
         objectFit="cover"
         loading="lazy"
       />
-      <div className="absolute bottom-0 transform -translate-x-1/2 opacity-0 left-1/2 group-hover:opacity-100">
-        <FaDownload onClick={handleDownload} className="text-xl" />
-      </div>
+      <ActionIcon
+        variant="filled"
+        color="dark"
+        radius="xl"
+        size="lg"
+        className="absolute bottom-3 left-1/2 -translate-x-1/2 transform opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+        onClick={handleDownload}
+        aria-label="Download cutout"
+      >
+        <Download size={18} strokeWidth={1.8} />
+      </ActionIcon>
       <Modal opened={isOpen} onClose={handleClose} size="xl">
         <Image
           src={imageLink}

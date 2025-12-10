@@ -1,12 +1,15 @@
-import { MantineProvider } from '@mantine/core';
-import { AppShell, Center } from '@mantine/core';
+import { Navbar } from '@/components/NavBar/NavBar';
+import { AppShell, MantineProvider, localStorageColorSchemeManager } from '@mantine/core';
 import React from 'react';
 import { theme } from '../theme';
-import { Navbar } from '@/components/NavBar/NavBar';
 
 export default function RootLayout({ children }: { children: any }) {
   return (
-    <MantineProvider theme={theme}>
+    <MantineProvider
+      theme={theme}
+      defaultColorScheme="auto"
+      colorSchemeManager={localStorageColorSchemeManager({ key: 'ai-cutout-color-scheme' })}
+    >
       <AppShell header={{ height: { base: 60, md: 70, lg: 80 } }} padding="md">
         <AppShell.Header withBorder={false}>
           <Navbar />

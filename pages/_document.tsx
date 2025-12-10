@@ -10,7 +10,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <ColorSchemeScript />
+          <ColorSchemeScript defaultColorScheme="auto" />
           <link rel="shortcut icon" href="/logo.svg" />
         </Head>
         <body>

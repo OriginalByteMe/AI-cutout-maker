@@ -1,41 +1,59 @@
 'use client';
 
-import { Button, useMantineColorScheme, ThemeIcon } from '@mantine/core';
-import { useState } from 'react';
-import { FaSun, FaMoon, FaSync } from 'react-icons/fa';
+import { ActionIcon, Tooltip, useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
+import { Laptop2, MoonStar, SunMedium } from 'lucide-react';
+import { useEffect, useState } from 'react';
+
+type Scheme = 'auto' | 'light' | 'dark';
 
 export function ColorSchemeToggle() {
-  const [scheme, setScheme] = useState('auto');
-  const { setColorScheme, colorScheme } = useMantineColorScheme();
+  const { colorScheme, setColorScheme } = useMantineColorScheme();
+  const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true }) as Scheme;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const labels: Record<Scheme, string> = {
+    auto: 'System',
+    light: 'Light',
+    dark: 'Dark',
+  };
 
   const handleClick = () => {
-    if (scheme === 'auto') {
-      setScheme('light');
-      setColorScheme('light');
-    } else if (scheme === 'light') {
-      setScheme('dark');
-      setColorScheme('dark');
-    } else {
-      setScheme('auto');
-      setColorScheme('auto');
-    }
+    const order: Scheme[] = ['auto', 'light', 'dark'];
+    const next = order[(order.indexOf(colorScheme as Scheme) + 1) % order.length];
+    setColorScheme(next);
   };
 
-  const getIcon = () => {
-    if (scheme === 'auto') {
-      return <FaSync />;
-    } else if (scheme === 'light') {
-      return <FaSun />;
-    } else {
-      return <FaMoon />;
-    }
-  };
+  const displayScheme: Scheme = mounted ? (colorScheme as Scheme) : 'auto';
+
+  const effectiveScheme =
+    displayScheme === 'auto' ? (computedColorScheme ?? 'light') : displayScheme;
+
+  const renderScheme = mounted ? effectiveScheme : 'auto';
+
+  const labelScheme: Scheme =
+    (!mounted && colorScheme === 'auto') || colorScheme === 'auto'
+      ? effectiveScheme
+      : (colorScheme as Scheme);
+
+  const icon = renderScheme === 'auto' ? Laptop2 : renderScheme === 'dark' ? MoonStar : SunMedium;
+
+  const IconComponent = icon;
 
   return (
-    <Button onClick={handleClick} variant="subtle">
-      <ThemeIcon color={colorScheme === 'light' ? 'black' : 'lilac'} radius="xl">
-        {getIcon()}
-      </ThemeIcon>
-    </Button>
+    <Tooltip withArrow label={`Theme: ${labels[labelScheme]}`}>
+      <ActionIcon
+        variant="default"
+        radius="xl"
+        size="lg"
+        aria-label={`Toggle color scheme (current: ${labels[labelScheme]})`}
+        onClick={handleClick}
+      >
+        <IconComponent size={18} strokeWidth={1.8} />
+      </ActionIcon>
+    </Tooltip>
   );
 }

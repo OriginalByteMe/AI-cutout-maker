@@ -1305,6 +1305,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@radix-ui/react-compose-refs@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@radix-ui/react-compose-refs@npm:1.1.2"
+  peerDependencies:
+    "@types/react": "*"
+    react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 9a91f0213014ffa40c5b8aae4debb993be5654217e504e35aa7422887eb2d114486d37e53c482d0fffb00cd44f51b5269fcdf397b280c71666fa11b7f32f165d
+  languageName: node
+  linkType: hard
+
+"@radix-ui/react-slot@npm:^1.0.2":
+  version: 1.2.4
+  resolution: "@radix-ui/react-slot@npm:1.2.4"
+  dependencies:
+    "@radix-ui/react-compose-refs": "npm:1.1.2"
+  peerDependencies:
+    "@types/react": "*"
+    react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: b37e37455b92789758980359d73ab5a5f5d1c12af480c775519bd15c556b891642d472accf05b30d520751489ca74cdb8fd7866064abc7942f0437371be28e51
+  languageName: node
+  linkType: hard
+
 "@rtsao/scc@npm:^1.1.0":
   version: 1.1.0
   resolution: "@rtsao/scc@npm:1.1.0"
@@ -2721,6 +2749,15 @@ __metadata:
   version: 1.4.3
   resolution: "cjs-module-lexer@npm:1.4.3"
   checksum: d2b92f919a2dedbfd61d016964fce8da0035f827182ed6839c97cac56e8a8077cfa6a59388adfe2bc588a19cef9bbe830d683a76a6e93c51f65852062cfe2591
+  languageName: node
+  linkType: hard
+
+"class-variance-authority@npm:^0.7.0":
+  version: 0.7.1
+  resolution: "class-variance-authority@npm:0.7.1"
+  dependencies:
+    clsx: "npm:^2.1.1"
+  checksum: 27a1face3f5ee88caa7813743461977aef5110830dc8e8960e7c9570598b37ffb8b2760b4e5d738dc827b0eb9058ddd204e9002e9af0ef39b6851f6ea9aa82c1
   languageName: node
   linkType: hard
 
@@ -5754,6 +5791,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lucide-react@npm:^0.556.0":
+  version: 0.556.0
+  resolution: "lucide-react@npm:0.556.0"
+  peerDependencies:
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 571df5109953ca6bd91e2723ae9347a647f0c31274f79ac4c53cb9faa3ca22cf68aace5211dcb61197e5fdec7bcadd4a9b8a0ae22e6ba5669e8a8ae6ddd906e0
+  languageName: node
+  linkType: hard
+
 "lz-string@npm:^1.5.0":
   version: 1.5.0
   resolution: "lz-string@npm:1.5.0"
@@ -6119,6 +6165,7 @@ __metadata:
     "@mantine/hooks": "npm:7.17.8"
     "@next/bundle-analyzer": "npm:16.0.8"
     "@next/eslint-plugin-next": "npm:16.0.8"
+    "@radix-ui/react-slot": "npm:^1.0.2"
     "@tabler/icons-react": "npm:^2.40.0"
     "@testing-library/dom": "npm:^9.3.3"
     "@testing-library/jest-dom": "npm:^6.1.4"
@@ -6132,6 +6179,7 @@ __metadata:
     autoprefixer: "npm:^10.4.16"
     axios: "npm:^1.6.2"
     babel-loader: "npm:^9.1.3"
+    class-variance-authority: "npm:^0.7.0"
     clsx: "npm:^2.1.0"
     embla-carousel-react: "npm:^7.1.0"
     eslint: "npm:^8.53.0"
@@ -6147,6 +6195,7 @@ __metadata:
     framer-motion: "npm:^11.0.25"
     jest: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
+    lucide-react: "npm:^0.556.0"
     next: "npm:16.0.8"
     postcss: "npm:^8.4.31"
     postcss-preset-mantine: "npm:1.10.0"
@@ -6155,7 +6204,6 @@ __metadata:
     react: "npm:19.2.1"
     react-dom: "npm:19.2.1"
     react-element-to-jsx-string: "npm:^15.0.0"
-    react-icons: "npm:^4.11.0"
     tailwind-merge: "npm:^2.2.2"
     tailwindcss: "npm:^3.3.5"
     ts-jest: "npm:^29.1.1"
@@ -6883,15 +6931,6 @@ __metadata:
     react: ^0.14.8 || ^15.0.1 || ^16.0.0 || ^17.0.1 || ^18.0.0
     react-dom: ^0.14.8 || ^15.0.1 || ^16.0.0 || ^17.0.1 || ^18.0.0
   checksum: 9a874b2f16b4624a72c4b766b096d693a382b9dc7f2264f802395852ae3435ccde8e9e47bbe45cf5f30eba70f8126af6aca832190e285b0096af3ecade994df1
-  languageName: node
-  linkType: hard
-
-"react-icons@npm:^4.11.0":
-  version: 4.12.0
-  resolution: "react-icons@npm:4.12.0"
-  peerDependencies:
-    react: "*"
-  checksum: 5cc20509ca0b182f1e7bf42c271846c48f688c8922e2439f48728805adc93ba18476a13588cbe91ee43a2d03b2787e0dc0b5cc4b9c4e4ae3426f4464b3c1b734
   languageName: node
   linkType: hard
 
