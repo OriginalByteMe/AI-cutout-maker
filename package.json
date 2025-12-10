@@ -17,9 +17,9 @@
   },
   "dependencies": {
     "@files-ui/react": "^1.0.8",
-    "@mantine/carousel": "^7.3.2",
-    "@mantine/core": "7.2.1",
-    "@mantine/hooks": "7.2.1",
+    "@mantine/carousel": "7.17.8",
+    "@mantine/core": "7.17.8",
+    "@mantine/hooks": "7.17.8",
     "@next/bundle-analyzer": "^14.0.1",
     "@tabler/icons-react": "^2.40.0",
     "autoprefixer": "^10.4.16",
