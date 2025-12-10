@@ -3,7 +3,7 @@ import { ExtFile, FileMosaic, FullScreen, ImagePreview } from '@files-ui/react';
 import { Carousel } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
 import React, { useState } from 'react';
-import { FaArrowRight } from 'react-icons/fa';
+import { ArrowRight } from 'lucide-react';
 import ImageGrid from './cutout-grid';
 
 interface FileMosaicComponentProps {
@@ -31,7 +31,7 @@ const FileMosaicComponent: React.FC<FileMosaicComponentProps> = ({ singleFile, m
 
   return (
     <div
-      className={`flex ${isMobile ? 'flex-col' : 'flex-row'} items-center justify-center space-x-4`}
+      className={`flex ${isMobile ? 'flex-col gap-6' : 'flex-row items-start gap-6'} justify-center`}
     >
       {singleFile ? (
         <div className={`${isMobile ? 'mb-5' : 'mr-5'}`}>
@@ -47,7 +47,7 @@ const FileMosaicComponent: React.FC<FileMosaicComponentProps> = ({ singleFile, m
       ) : (
         <CssLoader />
       )}
-      {isMobile ? null : <FaArrowRight className="text-xl" />}
+      {isMobile ? null : <ArrowRight className="text-slate-400" size={18} strokeWidth={1.8} />}
       {multipleFiles && multipleFiles.length > 0 ? (
         hasImages ? (
           // <div className="w-full h-screen py-20">
